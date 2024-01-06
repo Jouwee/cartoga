@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700;800&family=Poppins:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://kit.fontawesome.com/2cc2b83dd7.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        %sveltekit.head%
+        <style>
+            body {
+                margin: 0;
+                /* Ableton inspired */
+                --base: #292935;
+                --surface-1: #323541;
+                --surface-2: #444855;
+                --text: #a8a7b5;
+                --primary: #02c6d4;
+                --primary-contrast: #292935;
+                --transition: 0.1s ease-in-out;
+                --font: Eczar;
+
+                background: var(--base);
+                color: var(--text);
+            }
+
+            * {
+                font-family: var(--font);
+            }
+
+            input {
+                background: var(--surface-2);
+                color: var(--text);
+                border: none;
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type='number'] {
+                -moz-appearance: textfield;
+            }
+
+            /** Range --------------------------- */
+
+            input[type='range'] {
+                background: none;
+                height: 18px;
+                -webkit-appearance: none;
+                width: 100%;
+            }
+            input[type='range']:focus {
+                outline: none;
+            }
+            input[type='range']::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 6px;
+                cursor: pointer;
+                animate: 0.2s;
+                box-shadow: 0px 0px 0px #000000;
+                background: var(--surface-2);
+                border-radius: 5px;
+                border: 0px solid #000000;
+            }
+            input[type='range']::-webkit-slider-thumb {
+                box-shadow: 0px 0px 0px #000000;
+                border: 0px solid #000000;
+                height: 12px;
+                width: 12px;
+                border-radius: 6px;
+                background: var(--text);
+                cursor: pointer;
+                -webkit-appearance: none;
+                margin-top: -3px;
+            }
+            input[type='range']:focus::-webkit-slider-runnable-track {
+                background: var(--surface-2);
+            }
+            input[type='range']::-moz-range-track {
+                width: 100%;
+                height: 6px;
+                cursor: pointer;
+                animate: 0.2s;
+                box-shadow: 0px 0px 0px #000000;
+                background: var(--surface-2);
+                border-radius: 5px;
+                border: 0px solid #000000;
+            }
+            input[type='range']::-moz-range-thumb {
+                box-shadow: 0px 0px 0px #000000;
+                border: 0px solid #000000;
+                height: 12px;
+                width: 12px;
+                border-radius: 6px;
+                background: var(--text);
+                cursor: pointer;
+            }
+            input[type='range']::-ms-track {
+                width: 100%;
+                height: 6px;
+                cursor: pointer;
+                animate: 0.2s;
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+            input[type='range']::-ms-fill-lower {
+                background: #3071a9;
+                border: 0px solid #000000;
+                border-radius: 10px;
+                box-shadow: 0px 0px 0px #000000;
+            }
+            input[type='range']::-ms-fill-upper {
+                background: #3071a9;
+                border: 0px solid #000000;
+                border-radius: 10px;
+                box-shadow: 0px 0px 0px #000000;
+            }
+            input[type='range']::-ms-thumb {
+                margin-top: 1px;
+                box-shadow: 0px 0px 0px #000000;
+                border: 0px solid #000000;
+                height: 12px;
+                width: 12px;
+                border-radius: 6px;
+                background: var(--text);
+                cursor: pointer;
+            }
+            input[type='range']:focus::-ms-fill-lower {
+                background: var(--surface-2);
+            }
+            input[type='range']:focus::-ms-fill-upper {
+                background: var(--surface-2);
+            }
+        </style>
+    </head>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">%sveltekit.body%</div>
+    </body>
+</html>
