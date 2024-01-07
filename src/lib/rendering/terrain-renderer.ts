@@ -1,3 +1,4 @@
+import { Assets } from '$lib/assets/asset-loader'
 import type { MapModel } from '$lib/map-model'
 import type { DirtyRect } from '$lib/tool'
 
@@ -7,7 +8,7 @@ export class TerrainRenderer {
 
     async preload() {
         this.grassTexture = new Image()
-        this.grassTexture.src = '/images/map/grass.png'
+        this.grassTexture.src = Assets.getPath('/images/map/grass.png')
     }
 
     render(model: MapModel, rendering: CanvasRenderingContext2D, dirtyRect: DirtyRect) {
