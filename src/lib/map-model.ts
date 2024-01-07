@@ -1,4 +1,4 @@
-import { Vector } from './vector/vector'
+import { Vector, type Polygon } from './vector/vector'
 
 export enum PointType {
     Point = 0,
@@ -20,14 +20,6 @@ export interface Point {
     type: PointType
 }
 
-export type Node = [number, number]
-
-export interface Polygon {
-    type: 'path' | 'forest'
-    nodes: Node[]
-    closed: boolean
-}
-
 export interface Terrain {
     vector: Vector
 }
@@ -41,6 +33,6 @@ export class MapModel {
         type: 'forest'
         vector: Vector
     }> = []
+    paths: Polygon[] = []
     points: Point[] = []
-    polygons: Polygon[] = []
 }

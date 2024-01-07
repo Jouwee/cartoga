@@ -52,9 +52,10 @@
     // TODO: Baseado em eventos
     export function render(dirtyRect?: DirtyRect) {
         const repaintRect = dirtyRect ?? new DirtyRect(0, 0, 1200, 860)
-        renderer.renderTerrain(model, contexts[1], repaintRect)
-        renderer.renderTerrainFeatures(model, contexts[2])
-        renderer.renderPoints(model, contexts[3])
+        renderer.renderTerrain(model, contexts[LAYERS.terrain], repaintRect)
+        renderer.renderTerrainFeatures(model, contexts[LAYERS.terrainFeatures])
+        renderer.renderPoints(model, contexts[LAYERS.points])
+        renderer.renderPaths(model, contexts[LAYERS.paths])
     }
 
     export function renderTool<O>(tool: Tool<O>, currentMousePosition: [number, number], options: O) {

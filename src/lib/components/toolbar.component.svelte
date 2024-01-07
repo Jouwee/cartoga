@@ -5,6 +5,7 @@
     import { SelectTool } from '$lib/select-tool'
     import { TerrainFeatureTool } from '$lib/terrain-feature-tool'
     import { TerrainTool } from '$lib/terrain-tool'
+    import { PathTool } from '$lib/tools/path-tool'
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
     const tools = {
@@ -12,6 +13,7 @@
         terrain: new TerrainTool(),
         point: new PointTool(),
         forest: new TerrainFeatureTool(),
+        path: new PathTool(),
     }
     export let selectedToolKey: keyof typeof tools = 'terrain'
     $: {
@@ -24,8 +26,9 @@
 
     Keybinds.register({ key: 's' }, () => (selectedToolKey = 'select'))
     Keybinds.register({ key: 't' }, () => (selectedToolKey = 'terrain'))
-    Keybinds.register({ key: 'p' }, () => (selectedToolKey = 'point'))
+    Keybinds.register({ key: 'e' }, () => (selectedToolKey = 'point'))
     Keybinds.register({ key: 'f' }, () => (selectedToolKey = 'forest'))
+    Keybinds.register({ key: 'p' }, () => (selectedToolKey = 'path'))
 
     // TODO: Não faz muito sentido isso ficar aqui
     export let selectedPoint: Point | undefined = undefined
@@ -45,12 +48,17 @@
     <button
         on:click={() => (selectedToolKey = 'point')}
         class:selected={selectedToolKey === 'point'}
-        title="Settlement tool (P)"><i class="fa fa-landmark" /></button
+        title="Settlement tool (E)"><i class="fa fa-landmark" /></button
     >
     <button
         on:click={() => (selectedToolKey = 'forest')}
         class:selected={selectedToolKey === 'forest'}
         title="Forest tool (F)"><i class="fa fa-tree" /></button
+    >
+    <button
+        on:click={() => (selectedToolKey = 'path')}
+        class:selected={selectedToolKey === 'path'}
+        title="Path tool (P)"><i class="fa fa-road" /></button
     >
 </div>
 

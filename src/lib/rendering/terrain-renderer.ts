@@ -18,7 +18,7 @@ export class TerrainRenderer {
             }
         }
         rendering.fillStyle = this.grassPattern || '#003000FF'
-        rendering.clearRect(dirtyRect.x, dirtyRect.y, dirtyRect.width, dirtyRect.height)
+        rendering.clearRect(0, 0, 1200, 860)
         rendering.beginPath()
         for (let j = 0; j < model.terrain.vector.polygons.length; j++) {
             const polygon = model.terrain.vector.polygons[j]

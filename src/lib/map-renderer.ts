@@ -1,4 +1,5 @@
-import { type MapModel, PointType } from './map-model'
+import type { MapModel } from './map-model'
+import { PathRenderer } from './rendering/path-renderer'
 import { PointsRenderer } from './rendering/points-renderer'
 import { TerrainFeatureRenderer } from './rendering/terrain-feature-renderer'
 import { TerrainRenderer } from './rendering/terrain-renderer'
@@ -10,14 +11,16 @@ export const LAYERS = {
     background: 0,
     terrain: 1,
     terrainFeatures: 2,
-    points: 3,
-    tool: 4,
+    paths: 3,
+    points: 4,
+    tool: 5,
 }
 
 export class MapRenderer {
     private terrainRenderer: TerrainRenderer
     private terrainFeatureRenderer: TerrainFeatureRenderer
     private pointRenderer: PointsRenderer
+    private pathRenderer: PathRenderer = new PathRenderer()
 
     constructor() {
         this.terrainRenderer = new TerrainRenderer()
@@ -54,6 +57,10 @@ export class MapRenderer {
 
     renderPoints(model: MapModel, rendering: CanvasRenderingContext2D) {
         this.pointRenderer.render(model, rendering)
+    }
+
+    renderPaths(model: MapModel, rendering: CanvasRenderingContext2D) {
+        this.pathRenderer.render(model, rendering)
     }
 
     renderTool<O>(
