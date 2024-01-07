@@ -1,3 +1,4 @@
+import { Assets } from './assets/asset-loader'
 import type { MapModel } from './map-model'
 import { PathRenderer } from './rendering/path-renderer'
 import { PointsRenderer } from './rendering/points-renderer'
@@ -38,7 +39,7 @@ export class MapRenderer {
     renderBackground(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
         if (!background) {
             background = new Image()
-            background.src = '/images/map/water.png'
+            background.src = Assets.getPath('/images/map/water.png')
         }
         const pattern = rendering.createPattern(background, 'repeat')
         if (pattern) {

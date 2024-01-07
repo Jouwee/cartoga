@@ -1,3 +1,4 @@
+import { Assets } from '$lib/assets/asset-loader'
 import type { MapModel } from '$lib/map-model'
 
 export class TerrainFeatureRenderer {
@@ -8,7 +9,7 @@ export class TerrainFeatureRenderer {
 
     async preload() {
         this.stampTexture = new Image()
-        this.stampTexture.src = '/images/map/tree-1.png'
+        this.stampTexture.src = Assets.getPath('/images/map/tree-1.png')
     }
 
     render(model: MapModel, rendering: CanvasRenderingContext2D) {
