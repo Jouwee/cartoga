@@ -1,4 +1,2 @@
-source: build
-destination: .
 include:
     - _app
