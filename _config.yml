@@ -1,2 +1,3 @@
 source: build
-include: [build/_app/**]
+include: [
+  - _app
