@@ -24,4 +24,10 @@ export class SelectTool implements Tool<SelectToolOptions> {
     pressDown(): DirtyRect | undefined {
         return DirtyRect.NO_PAINT
     }
+
+    release(): DirtyRect | undefined {
+        return undefined
+    }
+
+    render(): void {}
 }

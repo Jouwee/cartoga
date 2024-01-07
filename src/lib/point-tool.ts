@@ -47,4 +47,6 @@ export class PointTool implements Tool<PointToolOptions> {
     release(): DirtyRect | undefined {
         return DirtyRect.NO_PAINT
     }
+
+    render(): void {}
 }
