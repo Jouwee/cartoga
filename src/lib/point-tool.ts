@@ -31,11 +31,13 @@ export class PointTool implements Tool<PointToolOptions> {
         if (point) {
             return DirtyRect.NO_PAINT
         } else {
-            model.points.push({
+            const point = {
                 x: event.x,
                 y: event.y,
                 type: options.type,
-            })
+                name: '',
+            }
+            model.points.push(point)
         }
         return undefined
     }

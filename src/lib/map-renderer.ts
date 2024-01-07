@@ -1,4 +1,5 @@
 import { type MapModel, PointType } from './map-model'
+import { PointsRenderer } from './rendering/points-renderer'
 import { TerrainFeatureRenderer } from './rendering/terrain-feature-renderer'
 import { TerrainRenderer } from './rendering/terrain-renderer'
 import type { DirtyRect, Tool } from './tool'
@@ -16,16 +17,19 @@ export const LAYERS = {
 export class MapRenderer {
     private terrainRenderer: TerrainRenderer
     private terrainFeatureRenderer: TerrainFeatureRenderer
+    private pointRenderer: PointsRenderer
 
     constructor() {
         this.terrainRenderer = new TerrainRenderer()
         this.terrainFeatureRenderer = new TerrainFeatureRenderer()
+        this.pointRenderer = new PointsRenderer()
         // TODO
         if (typeof document == 'undefined') {
             return
         }
         setTimeout(() => this.terrainRenderer.preload(), 100)
         setTimeout(() => this.terrainFeatureRenderer.preload(), 100)
+        setTimeout(() => this.pointRenderer.preload(), 100)
     }
 
     renderBackground(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
@@ -49,44 +53,7 @@ export class MapRenderer {
     }
 
     renderPoints(model: MapModel, rendering: CanvasRenderingContext2D) {
-        rendering.clearRect(0, 0, 1200, 860)
-        for (const point of model.points) {
-            switch (point.type) {
-                case PointType.MajorCity:
-                    rendering.fillStyle = '#381d0a'
-                    rendering.beginPath()
-                    rendering.arc(point.x, point.y, 5, 0, 2 * Math.PI)
-                    rendering.fill()
-                    rendering.fillStyle = '#d9b688'
-                    rendering.beginPath()
-                    rendering.arc(point.x, point.y, 3, 0, 2 * Math.PI)
-                    rendering.fill()
-                    rendering.fillStyle = '#381d0a'
-                    rendering.beginPath()
-                    rendering.arc(point.x, point.y, 1, 0, 2 * Math.PI)
-                    rendering.fill()
-                    break
-                case PointType.City:
-                    rendering.fillStyle = '#381d0a'
-                    rendering.beginPath()
-                    rendering.arc(point.x, point.y, 5, 0, 2 * Math.PI)
-                    rendering.fill()
-                    break
-                case PointType.Town:
-                    rendering.fillStyle = '#381d0a'
-                    rendering.fillRect(point.x, point.y, 5, 5)
-                    break
-                case PointType.Village:
-                    rendering.strokeStyle = '#381d0a'
-                    rendering.beginPath()
-                    rendering.rect(point.x, point.y, 5, 5)
-                    rendering.stroke()
-                    break
-            }
-            if ('name' in point) {
-                rendering.fillText(new String(point.name).toString(), point.x - 20, point.y + 15)
-            }
-        }
+        this.pointRenderer.render(model, rendering)
     }
 
     renderTool<O>(

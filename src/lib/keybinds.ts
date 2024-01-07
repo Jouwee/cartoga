@@ -2,14 +2,17 @@ export class Keybinds {
     static listeners: Array<Keybind & { callback: () => void }> = []
 
     static {
-        document.addEventListener('keydown', evt => {
-            console.log(evt.key)
-            for (const listener of Keybinds.listeners) {
-                if (evt.key === listener.key) {
-                    listener.callback()
+        if (typeof document !== 'undefined') {
+            document.addEventListener('keydown', evt => {
+                for (const listener of Keybinds.listeners) {
+                    if (evt.key === listener.key) {
+                        listener.callback()
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            console.error('No document on keybind registration. No keybinds will work')
+        }
     }
 
     static register(keybind: Keybind, callback: () => void) {

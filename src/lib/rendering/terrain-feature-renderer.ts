@@ -16,7 +16,9 @@ export class TerrainFeatureRenderer {
             this.offsets = this.computeOffsets()
         }
         rendering.clearRect(0, 0, 1200, 860)
+        rendering.filter = 'blur(4px)'
         this.drawVector(model, rendering)
+        rendering.filter = 'none'
         this.drawStamps(model, rendering)
     }
 
@@ -31,7 +33,7 @@ export class TerrainFeatureRenderer {
                 }
             }
             rendering.strokeStyle = '#381d0a30'
-            rendering.fillStyle = '#381d0a30'
+            rendering.fillStyle = '#381d0a40'
             rendering.fill('evenodd')
             rendering.stroke()
         }
@@ -49,7 +51,7 @@ export class TerrainFeatureRenderer {
                     Math.round(x * this.spacing + offset[0]),
                     Math.round(y * this.spacing + offset[1]),
                 ]
-                if (imageData.data[p[1] * (imageData.width * 4) + p[0] * 4 + 3] > 0) {
+                if (imageData.data[p[1] * (imageData.width * 4) + p[0] * 4 + 3] >= 0x20) {
                     rendering.drawImage(this.stampTexture, p[0] - this.stampSize[0] / 2, p[1] - this.stampSize[1] / 2)
                 }
             }

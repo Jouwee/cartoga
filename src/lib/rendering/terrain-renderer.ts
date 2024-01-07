@@ -29,14 +29,12 @@ export class TerrainRenderer {
             rendering.closePath()
         }
         // Shore effect
-        rendering.strokeStyle = '#FFFFFF10'
+        rendering.strokeStyle = '#FFFFFF30'
+        rendering.filter = 'blur(8px)'
         rendering.lineWidth = 32
         rendering.stroke()
-        rendering.lineWidth = 16
-        rendering.stroke()
-        rendering.lineWidth = 8
-        rendering.stroke()
         // Fill
+        rendering.filter = 'none'
         rendering.fill('evenodd')
         rendering.strokeStyle = '#381d0a30'
         rendering.lineWidth = 3
