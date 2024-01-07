@@ -44,8 +44,14 @@
         updateDownloadHref()
     }
 
+    let downloadTimeout: undefined | any
     function updateDownloadHref() {
-        downloadHref = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(model))
+        if (downloadTimeout) {
+            clearTimeout(downloadTimeout)
+        }
+        downloadTimeout = setTimeout(() => {
+            downloadHref = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(model))
+        }, 100)
     }
 
     function upload() {

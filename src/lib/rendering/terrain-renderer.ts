@@ -26,9 +26,20 @@ export class TerrainRenderer {
             for (let i = 1; i < polygon.nodes.length; i++) {
                 rendering.lineTo(polygon.nodes[i][0], polygon.nodes[i][1])
             }
+            rendering.closePath()
         }
+        // Shore effect
+        rendering.strokeStyle = '#FFFFFF10'
+        rendering.lineWidth = 32
+        rendering.stroke()
+        rendering.lineWidth = 16
+        rendering.stroke()
+        rendering.lineWidth = 8
+        rendering.stroke()
+        // Fill
         rendering.fill('evenodd')
-        rendering.strokeStyle = '#381d0a'
+        rendering.strokeStyle = '#381d0a30'
+        rendering.lineWidth = 3
         rendering.stroke()
 
         for (let k = 0; k < model.terrain.vector.unoptimizedUnionVectors.length; k++) {

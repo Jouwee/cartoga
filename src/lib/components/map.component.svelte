@@ -53,8 +53,8 @@
     export function render(dirtyRect?: DirtyRect) {
         const repaintRect = dirtyRect ?? new DirtyRect(0, 0, 1200, 860)
         renderer.renderTerrain(model, contexts[1], repaintRect)
-        renderer.renderTerrainFeatures(model, contexts[2], repaintRect)
-        renderer.renderPoints(model, contexts[3], repaintRect)
+        renderer.renderTerrainFeatures(model, contexts[2])
+        renderer.renderPoints(model, contexts[3])
     }
 
     export function renderTool<O>(tool: Tool<O>, currentMousePosition: [number, number], options: O) {

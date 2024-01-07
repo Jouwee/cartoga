@@ -29,16 +29,18 @@ export interface Polygon {
 }
 
 export interface Terrain {
-    heightmap: boolean[][]
     vector: Vector
 }
 
 export class MapModel {
     version: number = 1
     terrain: Terrain = {
-        heightmap: [],
         vector: new Vector([]),
     }
+    features: Array<{
+        type: 'forest'
+        vector: Vector
+    }> = []
     points: Point[] = []
     polygons: Polygon[] = []
 }

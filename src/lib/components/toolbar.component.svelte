@@ -3,6 +3,7 @@
     import { PointTool } from '$lib/point-tool'
     import { PolygonTool } from '$lib/polygon-tool'
     import { SelectTool } from '$lib/select-tool'
+    import { TerrainFeatureTool } from '$lib/terrain-feature-tool'
     import { TerrainTool } from '$lib/terrain-tool'
     import { createEventDispatcher, onMount } from 'svelte'
     const dispatch = createEventDispatcher()
@@ -10,7 +11,7 @@
         select: new SelectTool((type, selection) => (selectedPoint = selection)),
         terrain: new TerrainTool(),
         point: new PointTool(),
-        forest: new PolygonTool('forest', true),
+        forest: new TerrainFeatureTool(),
     }
     export let selectedToolKey: keyof typeof tools = 'terrain'
     $: {
