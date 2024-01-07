@@ -7,7 +7,7 @@ export class TerrainRenderer {
 
     async preload() {
         this.grassTexture = new Image()
-        this.grassTexture.src = 'http://localhost:5173/images/map/grass.png'
+        this.grassTexture.src = '../../images/map/grass.png'
     }
 
     render(model: MapModel, rendering: CanvasRenderingContext2D, dirtyRect: DirtyRect) {

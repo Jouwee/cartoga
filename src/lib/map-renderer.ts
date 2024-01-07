@@ -38,7 +38,7 @@ export class MapRenderer {
     renderBackground(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
         if (!background) {
             background = new Image()
-            background.src = 'http://localhost:5173/images/map/water.png'
+            background.src = '../../images/map/water.png'
         }
         const pattern = rendering.createPattern(background, 'repeat')
         if (pattern) {
