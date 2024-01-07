@@ -8,7 +8,7 @@ export class TerrainFeatureRenderer {
 
     async preload() {
         this.stampTexture = new Image()
-        this.stampTexture.src = '../../images/map/tree-1.png'
+        this.stampTexture.src = '/images/map/tree-1.png'
     }
 
     render(model: MapModel, rendering: CanvasRenderingContext2D) {

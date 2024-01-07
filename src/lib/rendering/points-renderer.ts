@@ -6,19 +6,19 @@ export class PointsRenderer {
 
     async preload() {
         const majorCityTexture = new Image()
-        majorCityTexture.src = '../../images/map/settlement-major-city.png'
+        majorCityTexture.src = '/images/map/settlement-major-city.png'
         this.textures.set(PointType.MajorCity, majorCityTexture)
         const cityTexture = new Image()
-        cityTexture.src = '../../images/map/settlement-city.png'
+        cityTexture.src = '/images/map/settlement-city.png'
         this.textures.set(PointType.City, cityTexture)
         const townTexture = new Image()
-        townTexture.src = '../../images/map/settlement-town.png'
+        townTexture.src = '/images/map/settlement-town.png'
         this.textures.set(PointType.Town, townTexture)
         const villageTexture = new Image()
-        villageTexture.src = '../../images/map/settlement-village.png'
+        villageTexture.src = '/images/map/settlement-village.png'
         this.textures.set(PointType.Village, villageTexture)
         const pointOfInterestTexture = new Image()
-        pointOfInterestTexture.src = '../../images/map/settlement-poi.png'
+        pointOfInterestTexture.src = '/images/map/settlement-poi.png'
         this.textures.set(PointType.PointOfInterest, pointOfInterestTexture)
         this.nameOptions.set(PointType.MajorCity, { render: true, fontSize: 14 })
         this.nameOptions.set(PointType.City, { render: true, fontSize: 12 })
