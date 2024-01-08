@@ -6,8 +6,6 @@ import { TerrainFeatureRenderer } from './rendering/terrain-feature-renderer'
 import { TerrainRenderer } from './rendering/terrain-renderer'
 import type { DirtyRect, Tool } from './tool'
 
-let background: HTMLImageElement
-
 export const LAYERS = {
     background: 0,
     terrain: 1,
@@ -37,11 +35,7 @@ export class MapRenderer {
     }
 
     renderBackground(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
-        if (!background) {
-            background = new Image()
-            background.src = Assets.getPath('/images/map/water.png')
-        }
-        const pattern = rendering.createPattern(background, 'repeat')
+        const pattern = rendering.createPattern(Assets.water, 'repeat')
         if (pattern) {
             rendering.fillStyle = pattern
             rendering.fillRect(repaintRect.x, repaintRect.y, repaintRect.width, repaintRect.height)

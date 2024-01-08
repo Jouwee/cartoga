@@ -2,15 +2,11 @@ import { Assets } from '$lib/assets/asset-loader'
 import type { MapModel } from '$lib/map-model'
 
 export class TerrainFeatureRenderer {
-    private stampTexture!: HTMLImageElement
     private offsets?: [number, number][][]
     private stampSize = [14, 16]
     private spacing = 10
 
-    async preload() {
-        this.stampTexture = new Image()
-        this.stampTexture.src = Assets.getPath('/images/map/tree-1.png')
-    }
+    async preload() {}
 
     render(model: MapModel, rendering: CanvasRenderingContext2D) {
         if (!this.offsets) {
@@ -41,9 +37,6 @@ export class TerrainFeatureRenderer {
     }
 
     drawStamps(model: MapModel, rendering: CanvasRenderingContext2D) {
-        if (!this.stampTexture) {
-            return
-        }
         const imageData = rendering.getImageData(0, 0, 1200, 860)
         for (let x = 0; x < 1200 / this.spacing; x++) {
             for (let y = 0; y < 860 / this.spacing; y++) {
@@ -53,7 +46,7 @@ export class TerrainFeatureRenderer {
                     Math.round(y * this.spacing + offset[1]),
                 ]
                 if (imageData.data[p[1] * (imageData.width * 4) + p[0] * 4 + 3] >= 0x20) {
-                    rendering.drawImage(this.stampTexture, p[0] - this.stampSize[0] / 2, p[1] - this.stampSize[1] / 2)
+                    rendering.drawImage(Assets.tree, p[0] - this.stampSize[0] / 2, p[1] - this.stampSize[1] / 2)
                 }
             }
         }

@@ -7,7 +7,6 @@ const config = {
     // Consult https://kit.svelte.dev/docs/integrations#preprocessors
     // for more information about preprocessors
     preprocess: vitePreprocess(),
-    base: 'https://jouwee.github.io/cartoga/',
     kit: {
         adapter: adapter({
             // default options are shown. On some platforms

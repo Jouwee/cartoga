@@ -1,15 +1,20 @@
 <script lang="ts">
+    import { Assets } from '$lib/assets/asset-loader'
     import type { MapModel } from '$lib/map-model'
     import { LAYERS, MapRenderer } from '$lib/map-renderer'
     import { DirtyRect, type Tool } from '$lib/tool'
     import { createEventDispatcher, onMount } from 'svelte'
+    import Loading from './loading.svelte'
     const dispatch = createEventDispatcher()
 
     export let model: MapModel
     const renderer = new MapRenderer()
     let contexts: CanvasRenderingContext2D[] = []
+    let loading: { progress: number; message: string } | undefined = { progress: 0, message: 'Initializing' }
 
-    onMount(() => {
+    onMount(async () => {
+        await Assets.preload((progress, message) => (loading = { progress, message }))
+        loading = undefined
         const layers = Array.from(document.querySelectorAll('canvas'))
         contexts = layers.map(canvas => canvas.getContext('2d') as CanvasRenderingContext2D)
         const eventLayer = layers[layers.length - 1]
@@ -62,6 +67,10 @@
         renderer.renderTool(tool, currentMousePosition, options, contexts[LAYERS.tool])
     }
 </script>
+
+{#if loading}
+    <Loading progress={loading.progress} message={loading.message} />
+{/if}
 
 <div class="canvas-container">
     {#each Object.values(LAYERS) as layer}

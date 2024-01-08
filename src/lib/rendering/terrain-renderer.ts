@@ -3,17 +3,13 @@ import type { MapModel } from '$lib/map-model'
 import type { DirtyRect } from '$lib/tool'
 
 export class TerrainRenderer {
-    private grassTexture!: HTMLImageElement
     private grassPattern!: CanvasPattern
 
-    async preload() {
-        this.grassTexture = new Image()
-        this.grassTexture.src = Assets.getPath('/images/map/grass.png')
-    }
+    async preload() {}
 
     render(model: MapModel, rendering: CanvasRenderingContext2D, dirtyRect: DirtyRect) {
-        if (this.grassTexture && !this.grassPattern) {
-            const pattern = rendering.createPattern(this.grassTexture, 'repeat')
+        if (!this.grassPattern) {
+            const pattern = rendering.createPattern(Assets.grass, 'repeat')
             if (pattern) {
                 this.grassPattern = pattern
             }
