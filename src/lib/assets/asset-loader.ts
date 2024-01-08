@@ -34,7 +34,6 @@ export class Assets {
         const loadPromise = new Promise<void>(resolve => (image.onload = resolve))
         image.src = Assets.getPath(path)
         await loadPromise
-        await new Promise(resolve => setTimeout(resolve, 250))
         return image
     }
 

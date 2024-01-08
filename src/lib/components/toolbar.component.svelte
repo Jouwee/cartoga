@@ -1,6 +1,7 @@
 <script lang="ts">
+    import { MapFile } from '$lib/file/map-file'
     import { Keybinds } from '$lib/keybinds'
-    import type { Point } from '$lib/map-model'
+    import type { MapModel, Point } from '$lib/map-model'
     import { PointTool } from '$lib/point-tool'
     import { SelectTool } from '$lib/select-tool'
     import { TerrainFeatureTool } from '$lib/terrain-feature-tool'
@@ -16,6 +17,7 @@
         path: new PathTool(),
     }
     export let selectedToolKey: keyof typeof tools = 'terrain'
+    export let model: MapModel
     $: {
         dispatch('toolSelected', tools[selectedToolKey])
     }
@@ -23,6 +25,21 @@
     setTimeout(() => {
         dispatch('toolSelected', tools[selectedToolKey])
     }, 200)
+
+    function newMap() {
+        dispatch('modelReplaced', MapFile.newMap())
+    }
+
+    async function uploadMap() {
+        const map = await MapFile.uploadMap()
+        if (map) {
+            dispatch('modelReplaced', map)
+        }
+    }
+
+    function downloadMap() {
+        MapFile.downloadMap(model)
+    }
 
     Keybinds.register({ key: 's' }, () => (selectedToolKey = 'select'))
     Keybinds.register({ key: 't' }, () => (selectedToolKey = 'terrain'))
@@ -35,6 +52,10 @@
 </script>
 
 <div class="toolbar">
+    <button on:click={newMap} title="New map"><i class="fa fa-file" /></button>
+    <button on:click={downloadMap} title="Save map"><i class="fa fa-floppy-disk" /></button>
+    <button on:click={uploadMap} title="Upload map"><i class="fa fa-folder-open" /></button>
+    <hr />
     <button
         on:click={() => (selectedToolKey = 'select')}
         class:selected={selectedToolKey === 'select'}
@@ -91,5 +112,11 @@
     .toolbar button.selected {
         background-color: var(--primary);
         color: var(--primary-contrast);
+    }
+
+    .toolbar hr {
+        border-top: 1px solid var(--surface-2);
+        color: transparent;
+        width: 2.5rem;
     }
 </style>
