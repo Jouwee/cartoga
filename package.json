@@ -34,6 +34,7 @@
 	"dependencies": {
 		"image-js": "^0.35.5",
 		"marvinj": "^1.0.0",
-		"polybooljs": "^1.2.0"
+		"polybooljs": "^1.2.0",
+		"posthog-js": "^1.96.1"
 	}
 }

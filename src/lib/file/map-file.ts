@@ -1,5 +1,6 @@
 import { MapModel } from '$lib/map-model'
 import { Vector } from '$lib/vector/vector'
+import posthog from 'posthog-js'
 
 export class MapFile {
     static newMap() {
@@ -41,6 +42,7 @@ export class MapFile {
 
     static downloadMap(model: MapModel) {
         const ahref = document.createElement('a')
+        posthog.capture('save_map', { model })
         ahref.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(model))
         ahref.download = 'map.json'
         ahref.click()
