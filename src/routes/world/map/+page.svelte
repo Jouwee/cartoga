@@ -4,8 +4,10 @@
     import Toolbar from '$lib/components/toolbar.component.svelte'
     import Map from '$lib/components/map.component.svelte'
     import ToolbarOptions from '$lib/components/toolbar-options.component.svelte'
+    import { Keybinds } from '$lib/keybinds'
+    import { selectionStore } from '$lib/stores/selection.store'
+    import { get } from 'svelte/store'
 
-    let selectedPoint: Point | undefined
     let selectedTool: Tool<unknown>
     let toolOptions: { [key: string]: any } = {}
     let map: Map
@@ -20,6 +22,7 @@
     function pressDown(evt: any) {
         let dirtyRect = selectedTool.pressDown(evt.detail, model, toolOptions as any)
         map.render(dirtyRect)
+        map.renderTool(selectedTool, [evt.detail.x, evt.detail.y], toolOptions)
     }
 
     function move(evt: any) {
@@ -38,13 +41,27 @@
             map.render(undefined)
         })
     }
+
+    Keybinds.register({ key: 'Delete' }, () => {
+        const selection = get(selectionStore)
+        if (selection) {
+            model.points = model.points.filter(p => p !== selection)
+            selectionStore.set(undefined)
+            map.render(undefined)
+            map.renderTool(selectedTool, [-1, -1], toolOptions)
+        }
+    })
 </script>
 
-<Toolbar {model} on:toolSelected={t => (selectedTool = t.detail)} bind:selectedPoint on:modelReplaced={modelChanged} />
+<Toolbar {model} on:toolSelected={t => (selectedTool = t.detail)} on:modelReplaced={modelChanged} />
 <Map {model} bind:this={map} on:click={click} on:pressDown={pressDown} on:move={move} on:release={release} />
 
 <div class="sidebar">
-    <ToolbarOptions {selectedTool} {selectedPoint} on:optionsChanged={o => (toolOptions = o.detail)} />
+    <ToolbarOptions
+        {selectedTool}
+        on:optionsChanged={o => (toolOptions = o.detail)}
+        on:render={() => map.render(undefined)}
+    />
 </div>
 
 <style>
@@ -57,6 +74,6 @@
         display: flex;
         flex-direction: column;
         background: var(--surface-1);
-        padding: 0.5rem;
+        padding: 1rem;
     }
 </style>

@@ -10,7 +10,7 @@
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
     const tools = {
-        select: new SelectTool((type, selection) => (selectedPoint = selection)),
+        select: new SelectTool(),
         terrain: new TerrainTool(),
         point: new PointTool(),
         forest: new TerrainFeatureTool(),
@@ -46,9 +46,6 @@
     Keybinds.register({ key: 'e' }, () => (selectedToolKey = 'point'))
     Keybinds.register({ key: 'f' }, () => (selectedToolKey = 'forest'))
     Keybinds.register({ key: 'p' }, () => (selectedToolKey = 'path'))
-
-    // TODO: Não faz muito sentido isso ficar aqui
-    export let selectedPoint: Point | undefined = undefined
 </script>
 
 <div class="toolbar">

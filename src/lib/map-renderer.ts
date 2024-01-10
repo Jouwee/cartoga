@@ -62,9 +62,10 @@ export class MapRenderer {
         tool: Tool<O>,
         currentMousePosition: [number, number],
         options: O,
-        rendering: CanvasRenderingContext2D
+        rendering: CanvasRenderingContext2D,
+        model: MapModel
     ) {
         rendering.clearRect(0, 0, 1200, 860)
-        tool.render(currentMousePosition, options, rendering)
+        tool.render(currentMousePosition, options, rendering, model)
     }
 }

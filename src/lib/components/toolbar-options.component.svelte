@@ -1,10 +1,14 @@
 <script lang="ts">
-    import type { Point } from '$lib/map-model'
+    import { PointTypeNames, type Point } from '$lib/map-model'
+    import { selectionStore } from '$lib/stores/selection.store'
     import type { Tool, ToolOption } from '$lib/tool'
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
 
-    export let selectedPoint: Point | undefined
+    let selectedPoint: Point | undefined
+    selectionStore.subscribe(selection => {
+        selectedPoint = selection
+    })
     export let selectedTool: Tool<unknown>
     let options: ToolOption[]
     const toolOptions: { [key: string]: any } = {}
@@ -22,6 +26,7 @@
 </script>
 
 {#if selectedTool}
+    <h2>Tool options</h2>
     {#each selectedTool.getOptions() as toolOption, i}
         <div class="option">
             <label for={toolOption.key}>{toolOption.name}</label>
@@ -52,16 +57,38 @@
     {/each}
 {/if}
 
-{#if selectedPoint !== undefined && 'name' in selectedPoint}
-    <input bind:value={selectedPoint.name} type="text" />
+{#if selectedPoint !== undefined}
+    <h2>Selected: {PointTypeNames[selectedPoint.type]}</h2>
+    {#if 'name' in selectedPoint}
+        <div class="option">
+            <label for="name">Name</label>
+            <input bind:value={selectedPoint.name} on:change={() => dispatch('render')} name="name" type="text" />
+        </div>
+    {/if}
 {/if}
 
 <style>
     .option {
-        display: grid;
-        grid-template-columns: 60px 60px 60px;
-        column-gap: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        justify-content: stretch;
         margin-bottom: 0.5rem;
         align-items: center;
+    }
+
+    .option label {
+        min-width: 50px;
+    }
+
+    .option input,
+    .option select {
+        min-width: 0;
+        flex-grow: 1;
+    }
+
+    h2 {
+        font-size: 0.875em;
+        font-weight: bold;
     }
 </style>

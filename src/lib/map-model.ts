@@ -9,6 +9,15 @@ export enum PointType {
     PointOfInterest = 99,
 }
 
+export const PointTypeNames = {
+    0: 'Point',
+    1: 'Major City',
+    2: 'City',
+    3: 'Town',
+    4: 'Village',
+    99: 'Point of Interest',
+}
+
 export interface Settlement {
     type: PointType.MajorCity | PointType.City | PointType.Town | PointType.Village
     name: string

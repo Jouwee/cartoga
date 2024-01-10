@@ -64,7 +64,7 @@
     }
 
     export function renderTool<O>(tool: Tool<O>, currentMousePosition: [number, number], options: O) {
-        renderer.renderTool(tool, currentMousePosition, options, contexts[LAYERS.tool])
+        renderer.renderTool(tool, currentMousePosition, options, contexts[LAYERS.tool], model)
     }
 </script>
 

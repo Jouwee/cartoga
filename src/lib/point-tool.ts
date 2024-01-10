@@ -1,5 +1,6 @@
 import { PointType, type MapModel } from './map-model'
 import { MapOperations } from './map-operations'
+import { selectionStore } from './stores/selection.store'
 import { DirtyRect, type PressDownEvent, type Tool, type ToolOption } from './tool'
 
 const points = [
@@ -38,6 +39,7 @@ export class PointTool implements Tool<PointToolOptions> {
                 name: '',
             }
             model.points.push(point)
+            selectionStore.set(point)
         }
         return undefined
     }
