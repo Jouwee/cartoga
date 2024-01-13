@@ -1,15 +1,11 @@
 import type { MapModel } from './map-model'
+import type { RenderingProxy } from './rendering/rendering-proxy'
 
 export interface Tool<Options> {
     click(event: PressDownEvent, model: MapModel, options: Options): DirtyRect | undefined
     pressDown(event: PressDownEvent, model: MapModel, options: Options): DirtyRect | undefined
     release(event: PressDownEvent, model: MapModel, options: Options): DirtyRect | undefined
-    render(
-        currentCursorPosition: [number, number],
-        options: Options,
-        rendering: CanvasRenderingContext2D,
-        model: MapModel
-    ): void
+    render(currentCursorPosition: [number, number], options: Options, rendering: RenderingProxy, model: MapModel): void
     getOptions(): ToolOption[]
 }
 

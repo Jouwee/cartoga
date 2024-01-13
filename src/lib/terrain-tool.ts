@@ -1,4 +1,5 @@
 import type { MapModel } from './map-model'
+import type { RenderingProxy } from './rendering/rendering-proxy'
 import { DirtyRect, type PressDownEvent, type Tool, type ToolOption } from './tool'
 import { VectorFactory } from './vector/vector'
 
@@ -47,11 +48,7 @@ export class TerrainTool implements Tool<TerrainOptions> {
         return undefined
     }
 
-    render(
-        currentCursorPosition: [number, number],
-        options: TerrainOptions,
-        rendering: CanvasRenderingContext2D
-    ): void {
+    render(currentCursorPosition: [number, number], options: TerrainOptions, rendering: RenderingProxy): void {
         rendering.beginPath()
         rendering.fillStyle = '#FFFFFF50'
         rendering.arc(currentCursorPosition[0], currentCursorPosition[1], options.size, 0, Math.PI * 2)

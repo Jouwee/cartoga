@@ -1,5 +1,6 @@
 import { Assets } from '$lib/assets/asset-loader'
 import type { MapModel } from '$lib/map-model'
+import type { RenderingProxy } from './rendering-proxy'
 
 export class TerrainFeatureRenderer {
     private offsets?: [number, number][][]
@@ -8,7 +9,7 @@ export class TerrainFeatureRenderer {
 
     async preload() {}
 
-    render(model: MapModel, rendering: CanvasRenderingContext2D) {
+    render(model: MapModel, rendering: RenderingProxy) {
         if (!this.offsets) {
             this.offsets = this.computeOffsets()
         }
@@ -19,7 +20,7 @@ export class TerrainFeatureRenderer {
         this.drawStamps(model, rendering)
     }
 
-    drawVector(model: MapModel, rendering: CanvasRenderingContext2D) {
+    drawVector(model: MapModel, rendering: RenderingProxy) {
         for (const feature of model.features) {
             rendering.beginPath()
             for (let j = 0; j < feature.vector.polygons.length; j++) {
@@ -36,19 +37,26 @@ export class TerrainFeatureRenderer {
         }
     }
 
-    drawStamps(model: MapModel, rendering: CanvasRenderingContext2D) {
-        const imageData = rendering.getImageData(0, 0, 1200, 860)
+    drawStamps(model: MapModel, rendering: RenderingProxy) {
+        const ps = []
         for (let x = 0; x < 1200 / this.spacing; x++) {
             for (let y = 0; y < 860 / this.spacing; y++) {
                 const offset = this.offsets![x][y]
+                if (!offset) {
+                    continue
+                }
                 const p: [number, number] = [
                     Math.round(x * this.spacing + offset[0]),
                     Math.round(y * this.spacing + offset[1]),
                 ]
-                if (imageData.data[p[1] * (imageData.width * 4) + p[0] * 4 + 3] >= 0x20) {
-                    rendering.drawImage(Assets.tree, p[0] - this.stampSize[0] / 2, p[1] - this.stampSize[1] / 2)
+                const pixel = rendering.getPixelAt(p[0], p[1])
+                if (pixel.a >= 0x20) {
+                    ps.push([p[0] - this.stampSize[0] / 2, p[1] - this.stampSize[1] / 2])
                 }
             }
+        }
+        for (const p of ps) {
+            rendering.drawImage(Assets.tree, p[0], p[1])
         }
     }
 

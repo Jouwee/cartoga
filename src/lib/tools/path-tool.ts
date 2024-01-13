@@ -1,4 +1,5 @@
 import { PathRenderer } from '$lib/rendering/path-renderer'
+import type { RenderingProxy } from '$lib/rendering/rendering-proxy'
 import type { Node } from '$lib/vector/vector'
 import type { MapModel } from '../map-model'
 import { DirtyRect, type PressDownEvent, type Tool, type ToolOption } from '../tool'
@@ -44,11 +45,7 @@ export class PathTool implements Tool<PathToolOptions> {
         return DirtyRect.NO_PAINT
     }
 
-    render(
-        currentCursorPosition: [number, number],
-        options: PathToolOptions,
-        rendering: CanvasRenderingContext2D
-    ): void {
+    render(currentCursorPosition: [number, number], options: PathToolOptions, rendering: RenderingProxy): void {
         if (this.nodes.length > 0) {
             const clone = this.nodes.concat([currentCursorPosition])
             new PathRenderer().renderPath({ nodes: clone }, rendering)

@@ -1,17 +1,18 @@
 import type { MapModel } from '$lib/map-model'
 import type { Node, Polygon } from '$lib/vector/vector'
+import type { RenderingProxy } from './rendering-proxy'
 
 export class PathRenderer {
     async preload() {}
 
-    render(model: MapModel, rendering: CanvasRenderingContext2D) {
+    render(model: MapModel, rendering: RenderingProxy) {
         rendering.clearRect(0, 0, 1200, 860)
         for (let j = 0; j < model.paths.length; j++) {
             this.renderPath(model.paths[j], rendering)
         }
     }
 
-    renderPath(polygon: Polygon, rendering: CanvasRenderingContext2D) {
+    renderPath(polygon: Polygon, rendering: RenderingProxy) {
         rendering.beginPath()
         rendering.moveTo(polygon.nodes[0][0], polygon.nodes[0][1])
         for (let i = 1; i < polygon.nodes.length; i++) {

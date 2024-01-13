@@ -3,6 +3,7 @@ import type { MapModel } from './map-model'
 import { MapOperations } from './map-operations'
 import { selectionStore } from './stores/selection.store'
 import { DirtyRect, type PressDownEvent, type Tool, type ToolOption } from './tool'
+import type { RenderingProxy } from './rendering/rendering-proxy'
 
 interface SelectToolOptions {}
 
@@ -41,7 +42,7 @@ export class SelectTool implements Tool<SelectToolOptions> {
     render(
         currentCursorPosition: [number, number],
         options: SelectToolOptions,
-        rendering: CanvasRenderingContext2D,
+        rendering: RenderingProxy,
         model: MapModel
     ): void {
         const point = new MapOperations(model).getNearestPoint(

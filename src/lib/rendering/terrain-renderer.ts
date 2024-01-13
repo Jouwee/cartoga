@@ -1,13 +1,13 @@
 import { Assets } from '$lib/assets/asset-loader'
 import type { MapModel } from '$lib/map-model'
-import type { DirtyRect } from '$lib/tool'
+import type { RenderingProxy } from './rendering-proxy'
 
 export class TerrainRenderer {
     private grassPattern!: CanvasPattern
 
     async preload() {}
 
-    render(model: MapModel, rendering: CanvasRenderingContext2D, dirtyRect: DirtyRect) {
+    render(model: MapModel, rendering: RenderingProxy) {
         if (!this.grassPattern) {
             const pattern = rendering.createPattern(Assets.grass, 'repeat')
             if (pattern) {

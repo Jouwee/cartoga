@@ -2,8 +2,10 @@ import { Assets } from './assets/asset-loader'
 import type { MapModel } from './map-model'
 import { PathRenderer } from './rendering/path-renderer'
 import { PointsRenderer } from './rendering/points-renderer'
+import { RenderingProxy } from './rendering/rendering-proxy'
 import { TerrainFeatureRenderer } from './rendering/terrain-feature-renderer'
 import { TerrainRenderer } from './rendering/terrain-renderer'
+import type { RenderingContext } from './stores/rendering.store'
 import type { DirtyRect, Tool } from './tool'
 
 export const LAYERS = {
@@ -42,20 +44,40 @@ export class MapRenderer {
         }
     }
 
-    renderTerrain(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
-        this.terrainRenderer.render(model, rendering, repaintRect)
+    renderTerrain(
+        model: MapModel,
+        rendering: CanvasRenderingContext2D,
+        context: RenderingContext,
+        repaintRect: DirtyRect
+    ) {
+        this.terrainRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
     }
 
-    renderTerrainFeatures(model: MapModel, rendering: CanvasRenderingContext2D) {
-        this.terrainFeatureRenderer.render(model, rendering)
+    renderTerrainFeatures(
+        model: MapModel,
+        rendering: CanvasRenderingContext2D,
+        context: RenderingContext,
+        repaintRect: DirtyRect
+    ) {
+        this.terrainFeatureRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
     }
 
-    renderPoints(model: MapModel, rendering: CanvasRenderingContext2D) {
-        this.pointRenderer.render(model, rendering)
+    renderPoints(
+        model: MapModel,
+        rendering: CanvasRenderingContext2D,
+        context: RenderingContext,
+        repaintRect: DirtyRect
+    ) {
+        this.pointRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
     }
 
-    renderPaths(model: MapModel, rendering: CanvasRenderingContext2D) {
-        this.pathRenderer.render(model, rendering)
+    renderPaths(
+        model: MapModel,
+        rendering: CanvasRenderingContext2D,
+        context: RenderingContext,
+        repaintRect: DirtyRect
+    ) {
+        this.pathRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
     }
 
     renderTool<O>(
@@ -63,9 +85,11 @@ export class MapRenderer {
         currentMousePosition: [number, number],
         options: O,
         rendering: CanvasRenderingContext2D,
+        context: RenderingContext,
+        repaintRect: DirtyRect,
         model: MapModel
     ) {
         rendering.clearRect(0, 0, 1200, 860)
-        tool.render(currentMousePosition, options, rendering, model)
+        tool.render(currentMousePosition, options, new RenderingProxy(rendering, context, repaintRect), model)
     }
 }

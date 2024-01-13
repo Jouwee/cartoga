@@ -1,5 +1,6 @@
 import { Assets } from '$lib/assets/asset-loader'
 import { PointType, type MapModel } from '$lib/map-model'
+import type { RenderingProxy } from './rendering-proxy'
 
 export class PointsRenderer {
     private textures: Map<PointType, HTMLImageElement> = new Map()
@@ -18,7 +19,7 @@ export class PointsRenderer {
         this.nameOptions.set(PointType.PointOfInterest, { render: true, fontSize: 8 })
     }
 
-    render(model: MapModel, rendering: CanvasRenderingContext2D) {
+    render(model: MapModel, rendering: RenderingProxy) {
         rendering.clearRect(0, 0, 1200, 860)
         for (const point of model.points) {
             const img = this.textures.get(point.type)
