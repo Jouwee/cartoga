@@ -1,4 +1,6 @@
+import { Telemetry } from '$lib/telemetry/telemetry'
 import { PolygonBoolean } from './polybool.interop'
+import polygonClipping from 'polygon-clipping'
 
 export class Vector {
     polygons: Polygon[] = []
@@ -15,6 +17,7 @@ export class Vector {
     }
 
     union(another: Vector): Vector {
+        Telemetry.timerStart('Vector union polybool')
         const unionResult = PolygonBoolean.union(
             {
                 regions: this.polygons.map(p => p.nodes),
@@ -25,7 +28,23 @@ export class Vector {
                 inverted: false,
             }
         )
-        return new Vector(unionResult.regions.map(r => ({ nodes: r })))
+        const newVector = new Vector(unionResult.regions.map(r => ({ nodes: r })))
+        Telemetry.timerEnd('Vector union polybool')
+        // Telemetry.timerStart('Vector union polygonClipping')
+        // const union = polygonClipping.union(
+        //     this.polygons.map(p => p.nodes),
+        //     another.polygons.map(p => p.nodes)
+        // )
+        // const polygons = []
+        // for (let i = 0; i < union.length; i++) {
+        //     for (let j = 0; j < union[i].length; j++) {
+        //         polygons.push({ nodes: union[i][j] })
+        //     }
+        // }
+        // // console.log(polygons)
+        // const unionVector = new Vector(polygons)
+        // Telemetry.timerEnd('Vector union polygonClipping')
+        return newVector
     }
 
     intersect(another: Vector): Vector {

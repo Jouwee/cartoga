@@ -6,6 +6,7 @@ import { RenderingProxy } from './rendering/rendering-proxy'
 import { TerrainFeatureRenderer } from './rendering/terrain-feature-renderer'
 import { TerrainRenderer } from './rendering/terrain-renderer'
 import type { RenderingContext } from './stores/rendering.store'
+import { Telemetry } from './telemetry/telemetry'
 import type { DirtyRect, Tool } from './tool'
 
 export const LAYERS = {
@@ -37,11 +38,13 @@ export class MapRenderer {
     }
 
     renderBackground(model: MapModel, rendering: CanvasRenderingContext2D, repaintRect: DirtyRect) {
+        Telemetry.timerStart('Render Background')
         const pattern = rendering.createPattern(Assets.water, 'repeat')
         if (pattern) {
             rendering.fillStyle = pattern
             rendering.fillRect(repaintRect.x, repaintRect.y, repaintRect.width, repaintRect.height)
         }
+        Telemetry.timerEnd('Render Background')
     }
 
     renderTerrain(
@@ -50,7 +53,9 @@ export class MapRenderer {
         context: RenderingContext,
         repaintRect: DirtyRect
     ) {
+        Telemetry.timerStart('Render Terrain')
         this.terrainRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
+        Telemetry.timerEnd('Render Terrain')
     }
 
     renderTerrainFeatures(
@@ -59,7 +64,9 @@ export class MapRenderer {
         context: RenderingContext,
         repaintRect: DirtyRect
     ) {
+        Telemetry.timerStart('Render Terrain Features')
         this.terrainFeatureRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
+        Telemetry.timerEnd('Render Terrain Features')
     }
 
     renderPoints(
@@ -68,7 +75,9 @@ export class MapRenderer {
         context: RenderingContext,
         repaintRect: DirtyRect
     ) {
+        Telemetry.timerStart('Render Points')
         this.pointRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
+        Telemetry.timerEnd('Render Points')
     }
 
     renderPaths(
@@ -77,7 +86,9 @@ export class MapRenderer {
         context: RenderingContext,
         repaintRect: DirtyRect
     ) {
+        Telemetry.timerStart('Render Paths')
         this.pathRenderer.render(model, new RenderingProxy(rendering, context, repaintRect))
+        Telemetry.timerEnd('Render Paths')
     }
 
     renderTool<O>(
